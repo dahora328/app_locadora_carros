@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarroController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\LocacaoController;
 use App\Http\Controllers\MarcaController;
@@ -24,7 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-//Route::resource('cliente', ClienteController::class);
 Route::apiResource('cliente', ClienteController::class);
 Route::apiResource('carro', CarroController::class);
 Route::apiResource('locacao', LocacaoController::class);
