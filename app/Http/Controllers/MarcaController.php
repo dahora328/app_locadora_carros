@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateMarcaRequest;
 
 class MarcaController extends Controller
 {
@@ -35,11 +36,22 @@ class MarcaController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Marca $marca)
+    {
+
+        $marca->update($request->all());
+
+        return $marca;
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Marca $marca)
     {
-        //
+        return 'Chegamos até aqui';
     }
 
     /**
