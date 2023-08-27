@@ -3,18 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateMarcaRequest;
 
 class MarcaController extends Controller
 {
+    protected $marca;
+
+    public function __construct(Marca $marca) {
+        $this->marca = $marca;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $marcas = Marca::all();
-        return $marcas;
+        //$marcas = Marca::all();
+        $marcas = $this->marca->all();
+        return Response()->json($marcas, 200);
     }
 
 
@@ -23,27 +29,37 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        $marca = Marca::create($request->all());
-        return $marca;
+        //$marca = Marca::create($request->all());
+        $marca = $this->marca->create($request->all());
+        return Response()->json($marca, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Marca $marca)
+    public function show($id)
     {
-        return $marca;
+        $marca = $this->marca->find($id);
+        if($marca === null){
+            return Response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
+        }
+        return Response()->json($marca, 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Marca $marca)
+    public function update(Request $request, $id)
     {
 
-        $marca->update($request->all());
+        //$marca->update($request->all());
+        $marca = $this->marca->find($id);
+        if($marca === null){
+            return Response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
+        }
 
-        return $marca;
+        $marca->update($request->all());
+        return Response()->json($marca, 200);;
     }
 
     /**
@@ -51,15 +67,22 @@ class MarcaController extends Controller
      */
     public function edit(Marca $marca)
     {
-        return 'Chegamos até aqui';
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Marca $marca)
+    public function destroy($id)
     {
+        //$marca->delete();
+        $marca = $this->marca->find($id);
+
+        if($marca === null){
+            return Response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
         $marca->delete();
-        return ['msg' => 'A marca foi removida com sucesso!'];
+        return Response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
     }
 }
