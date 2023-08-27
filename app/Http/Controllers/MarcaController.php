@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MarcaController extends Controller
 {
@@ -62,8 +62,11 @@ class MarcaController extends Controller
     public function update(Request $request, $id)
     {
 
-        //$marca->update($request->all());
+
         $marca = $this->marca->find($id);
+
+
+
         if($marca === null){
             return Response()->json(['erro' => 'Impossível realizar a atualização. O recurso solicitado não existe'], 404);
         }
@@ -87,7 +90,19 @@ class MarcaController extends Controller
             $request->validate($marca->rules(), $marca->feedback());
         }
         
-        $marca->update($request->all());
+        // Remove o arquivo antigo caso um novo arquivo tebha sido enviado no request
+        if($request->file('imagem')){
+            Storage::disk('public')->delete($marca->imagem);
+        }
+
+        $image = $request->file('imagem');
+
+        $image_urn = $image->store('imagens', 'public');
+
+        $marca->update([
+            'nome'=> $request->nome,
+            'imagem' => $image_urn
+        ]);
         return Response()->json($marca, 200);;
     }
 
@@ -102,6 +117,10 @@ class MarcaController extends Controller
         if($marca === null){
             return Response()->json(['erro' => 'Impossível realizar a exclusão. O recurso solicitado não existe'], 404);
         }
+
+
+        // Remove o arquivo antigo
+        Storage::disk('public')->delete($marca->imagem);
 
         $marca->delete();
         return Response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
