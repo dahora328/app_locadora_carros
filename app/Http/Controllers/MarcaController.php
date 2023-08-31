@@ -103,7 +103,7 @@ class MarcaController extends Controller
             'nome'=> $request->nome,
             'imagem' => $image_urn
         ]);
-        return Response()->json($marca, 200);;
+        return Response()->json($marca, 200);
     }
 
     /**
