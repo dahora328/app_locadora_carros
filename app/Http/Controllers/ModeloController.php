@@ -93,11 +93,14 @@ class ModeloController extends Controller
             Storage::disk('public')->delete($modelo->imagem);
         }
 
-        $image = $request->file('imagem');
+        $imagem = $request->file('imagem');
 
-        $image_urn = $image->store('imagens/modelos', 'public');
+        $image_urn = $imagem->store('imagens/modelos', 'public');
 
-        $modelo->update([
+        $modelo->fill($request->all());
+        $modelo->imagem = $image_urn;
+        $modelo->save();
+        /*$modelo->update([
             'marca_id' => $request->marca_id,
             'nome'=> $request->nome,
             'imagem' => $image_urn,
@@ -105,7 +108,7 @@ class ModeloController extends Controller
             'lugares' => $request->lugares,
             'air_bag' => $request->air_bag,
             'abs' => $request->abs
-        ]);
+        ]);*/
         return Response()->json($modelo, 200);
     }
 
