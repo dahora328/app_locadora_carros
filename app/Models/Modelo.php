@@ -26,4 +26,9 @@ class Modelo extends Model
             3) id do registro que será desconsiderado na pesquisa
         */
     }
+
+    public function marca(){
+        //Um modelo pertence uma marca
+        return $this->belongsTo('App\Models\Marca');
+    }
 }
