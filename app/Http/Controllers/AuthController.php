@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 class AuthController extends Controller
 {
     public function login(Request $request){
@@ -36,6 +37,6 @@ class AuthController extends Controller
     }
 
     public function me(){
-        return 'me';
+        return response()->json(auth()->user());
     }
 }
