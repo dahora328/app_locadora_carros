@@ -9,6 +9,7 @@ import { createApp } from 'vue';
 import Login from './components/Login.vue';
 import Home from './components/Home.vue';
 import Marcas from './components/Marcas.vue'
+import ImputContainer from './components/ImputContainer.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -24,6 +25,7 @@ app.component('example-component', ExampleComponent);
 app.component('login', Login);
 app.component('home', Home);
 app.component('marcas', Marcas);
+app.component('imputContainer', ImputContainer);
 
 
 /**
