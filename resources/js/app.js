@@ -10,6 +10,8 @@ import Login from './components/Login.vue';
 import Home from './components/Home.vue';
 import Marcas from './components/Marcas.vue'
 import ImputContainer from './components/ImputContainer.vue';
+import Table from './components/Table.vue';
+import Card from './components/Card.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -26,7 +28,8 @@ app.component('login', Login);
 app.component('home', Home);
 app.component('marcas', Marcas);
 app.component('imputContainer', ImputContainer);
-
+app.component('table-compoent', Table);
+app.component('card', Card);
 
 /**
  * The following block of code may be used to automatically register your
