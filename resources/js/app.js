@@ -12,6 +12,7 @@ import Marcas from './components/Marcas.vue'
 import ImputContainer from './components/ImputContainer.vue';
 import Table from './components/Table.vue';
 import Card from './components/Card.vue';
+import Modal from './components/Modal.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -28,8 +29,9 @@ app.component('login', Login);
 app.component('home', Home);
 app.component('marcas', Marcas);
 app.component('imputContainer', ImputContainer);
-app.component('table-compoent', Table);
+app.component('table-component', Table);
 app.component('card', Card);
+app.component('modal-component', Modal);
 
 /**
  * The following block of code may be used to automatically register your
