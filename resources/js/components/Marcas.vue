@@ -78,7 +78,7 @@
     </div>
 
 
-    
+
     <modal-component id="modalMarca" titulo="Adicionar marca">
       <template v-slot:conteudo>
         <div class="form-group">
@@ -100,7 +100,7 @@
         </div>
 
         <div class="form-group">
-          <imput-container            
+          <imput-container
             id="novaImagem"
             id-help="novaImagemHelp"
             texto-ajuda="Selecione uma imagem no formato PNG"
@@ -137,7 +137,7 @@ import axios from 'axios'
 
         token = 'Bearer ' + token 
 
-        
+
         return token
       }
     },
