@@ -127,14 +127,15 @@
 import axios from 'axios'
   export default{
     computed:{
+      //configuração do token
       token() {
         let token = document.cookie.split(';').find(indice => {
           return indice.includes('token=')
         })
 
-        token = token.split('=')[1]
+        token = token.split('=')[1] //pega indice da posição 1
 
-        token = 'Bearer ' + token
+        token = 'Bearer ' + token 
 
         
         return token
@@ -158,6 +159,7 @@ import axios from 'axios'
         formData.append('nome', this.nomeMarca)
         formData.append('imagem', this.arquivoImagem[0])
 
+        //Cabeçalho da requisição
         let config = {
           headers:{
             'Content-Type': 'multipart/form-data',
@@ -166,6 +168,7 @@ import axios from 'axios'
           }
         }
 
+        //Verbo da requisição
         axios.post(this.urlBase, formData, config)
               .then(response=>{
                   console.log(response)
