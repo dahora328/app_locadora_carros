@@ -13,6 +13,7 @@ import ImputContainer from './components/ImputContainer.vue';
 import Table from './components/Table.vue';
 import Card from './components/Card.vue';
 import Modal from './components/Modal.vue';
+import Alert from './components/Alert.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -32,6 +33,7 @@ app.component('imputContainer', ImputContainer);
 app.component('table-component', Table);
 app.component('card', Card);
 app.component('modal-component', Modal);
+app.component('alert-component', Alert);
 
 /**
  * The following block of code may be used to automatically register your
