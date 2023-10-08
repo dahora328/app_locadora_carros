@@ -43,7 +43,7 @@
             <card titulo="Relação de Marcas">
               <template v-slot:conteudo>
                 <table-component 
-                :dados="marcas"
+                :dados="marcas.data"
                 :titulos="{
                   id: {titulo: 'ID', tipo:'texto'},
                   nome: {titulo: 'Nome', tipo:'texto'},
@@ -124,7 +124,7 @@ export default {
       arquivoImagem: [],
       transacaoStatus: '',
       transacaoDetalhes: {},
-      marcas: []
+      marcas: { data: [] },
     }
   },
   methods: {
