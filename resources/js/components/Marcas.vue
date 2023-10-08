@@ -42,21 +42,26 @@
           <div class="card mb-3">
             <card titulo="Relação de Marcas">
               <template v-slot:conteudo>
-                <table-component 
-                :dados="marcas.data"
-                :titulos="{
-                  id: {titulo: 'ID', tipo:'texto'},
-                  nome: {titulo: 'Nome', tipo:'texto'},
-                  imagem: {titulo: 'Imagem', tipo:'imagem'},
-                  created_at: {titulo: 'Data Criação', tipo:'data'},
-                }"
-                ></table-component>
+                <table-component :dados="marcas.data" :titulos="{
+                  id: { titulo: 'ID', tipo: 'texto' },
+                  nome: { titulo: 'Nome', tipo: 'texto' },
+                  imagem: { titulo: 'Imagem', tipo: 'imagem' },
+                  created_at: { titulo: 'Data Criação', tipo: 'data' },
+                }"></table-component>
               </template>
               <template v-slot:rodape>
-                <button type="submit" class="btn btn-primary btn-sm me-md-2" data-bs-toggle="modal"
-                  data-bs-target="#modalMarca">
-                  Adicionar
-                </button>
+                <div class="col-10">
+                  <paginate-component>
+                    <li v-for="l, key in this.marcas.links" :key="key" :class="l.active ? 'page-item active' : 'page-item'" @click="paginacao(l)"><a class="page-link"
+                        v-html="l.label"></a></li>
+                  </paginate-component>
+                </div>
+                <div class="justify-content-md-end">
+                  <button type="submit" class="btn btn-primary btn-sm me-md-2" data-bs-toggle="modal"
+                    data-bs-target="#modalMarca">
+                    Adicionar
+                  </button>
+                </div>
               </template>
             </card>
           </div>
@@ -128,10 +133,16 @@ export default {
     }
   },
   methods: {
-    carregarLista(){
+    paginacao(l){
+      if(l.url){
+        this.urlBase = l.url //ajustando a url de consulta com o parâmetro de página
+        this.carregarLista() //requisitando novamente os dados para nossa API
+      }
+    },
+    carregarLista() {
 
-       //Cabeçalho da requisição
-       let config = {
+      //Cabeçalho da requisição
+      let config = {
         headers: {
           'Accept': 'application/json',
           'Authorization': this.token
@@ -139,13 +150,13 @@ export default {
       }
 
       axios.get(this.urlBase, config)
-          .then(response=>{
-            this.marcas = response.data
-            console.log(this.marcas)
-          })
-          .catch(erros=>{
-            console.log(erros)
-          })
+        .then(response => {
+          this.marcas = response.data
+          //console.log(this.marcas)
+        })
+        .catch(erros => {
+          console.log(erros)
+        })
     },
     carregarImagem(e) {
       this.arquivoImagem = e.target.files
@@ -172,7 +183,7 @@ export default {
           this.transacaoStatus = 'adicionado'
           this.transacaoDetalhes = {
             mensagem: 'ID do registro: ' + response.data.id
-          } 
+          }
           console.log(response)
         })
         .catch(erros => {
@@ -180,7 +191,7 @@ export default {
           this.transacaoDetalhes = {
             mensagem: erros.response.data.message,
             dados: erros.response.data.erros
-          } 
+          }
           //console.log(erros.response.data.message)
         })
     }

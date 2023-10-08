@@ -14,6 +14,7 @@ import Table from './components/Table.vue';
 import Card from './components/Card.vue';
 import Modal from './components/Modal.vue';
 import Alert from './components/Alert.vue';
+import Paginate from './components/Paginate.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -34,6 +35,7 @@ app.component('table-component', Table);
 app.component('card', Card);
 app.component('modal-component', Modal);
 app.component('alert-component', Alert);
+app.component('paginate-component', Paginate);
 
 /**
  * The following block of code may be used to automatically register your
