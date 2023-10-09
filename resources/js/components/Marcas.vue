@@ -10,20 +10,21 @@
                 <div class="col mb-3">
                   <imput-container titulo="ID" id="imputId" id-help="idHelp"
                     texto-ajuda="Opcional. Informe o ID da marca.">
-                    <input type="number" class="form-control" id="imputId" aria-describedby="idHelp" placeholder="ID" />
+                    <input type="number" class="form-control" id="imputId" aria-describedby="idHelp" placeholder="ID"
+                      v-model="busca.id" />
                   </imput-container>
                 </div>
                 <div class="col mb-3">
                   <imput-container titulo="Nome da Marca" id="imputNome" id-help="nomeHelp"
                     texto-ajuda="Opcional. Informe o nome da marca.">
                     <input type="text" class="form-control" id="imputNome" aria-describedby="nomeHelp"
-                      placeholder="Nome da marca" />
+                      placeholder="Nome da marca" v-model="busca.nome" />
                   </imput-container>
                 </div>
               </div>
             </template>
             <template v-slot:rodape>
-              <button type="submit" class="btn btn-primary btn-sm me-md-2">
+              <button type="submit" class="btn btn-primary btn-sm me-md-2" @click="pesquisar()">
                 Pesquisar
               </button>
             </template>
@@ -52,7 +53,8 @@
               <template v-slot:rodape>
                 <div class="col-10">
                   <paginate-component>
-                    <li v-for="l, key in this.marcas.links" :key="key" :class="l.active ? 'page-item active' : 'page-item'" @click="paginacao(l)"><a class="page-link"
+                    <li v-for="l, key in this.marcas.links" :key="key"
+                      :class="l.active ? 'page-item active' : 'page-item'" @click="paginacao(l)"><a class="page-link"
                         v-html="l.label"></a></li>
                   </paginate-component>
                 </div>
@@ -125,22 +127,47 @@ export default {
   data() {
     return {
       urlBase: 'http://localhost/api/v1/marca',
+      urlPaginacao: '',
+      urlFiltro: '',
       nomeMarca: '',
       arquivoImagem: [],
       transacaoStatus: '',
       transacaoDetalhes: {},
       marcas: { data: [] },
+      busca: { id: '', nome: '' }
     }
   },
   methods: {
-    paginacao(l){
-      if(l.url){
-        this.urlBase = l.url //ajustando a url de consulta com o parâmetro de página
+    pesquisar() {
+      let filtro = ''
+
+      for (let chave in this.busca) {
+        if (this.busca[chave]) {
+          if (filtro != '') {
+            filtro += ";"
+          }
+          filtro += chave + ':like:' + this.busca[chave]
+        }
+        if (filtro != '') {
+          this.urlPaginacao = 'page=1'
+          this.urlFiltro = '&filtro=' + filtro
+        } else {
+
+          this.urlFiltro = ''
+        }
+      }
+      this.carregarLista()
+    },
+    paginacao(l) {
+      if (l.url) {
+        //this.urlBase = l.url //ajustando a url de consulta com o parâmetro de página
+        this.urlPaginacao = l.url.split('?')[1]
         this.carregarLista() //requisitando novamente os dados para nossa API
       }
     },
     carregarLista() {
 
+      let url = this.urlBase + '?' + this.urlPaginacao + this.urlFiltro
       //Cabeçalho da requisição
       let config = {
         headers: {
@@ -149,7 +176,7 @@ export default {
         }
       }
 
-      axios.get(this.urlBase, config)
+      axios.get(url, config)
         .then(response => {
           this.marcas = response.data
           //console.log(this.marcas)
