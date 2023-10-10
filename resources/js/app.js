@@ -5,6 +5,7 @@
  */
 
 import './bootstrap';
+import { createStore } from 'vuex'
 import { createApp } from 'vue';
 import Login from './components/Login.vue';
 import Home from './components/Home.vue';
@@ -22,7 +23,15 @@ import Paginate from './components/Paginate.vue';
  * to use in your application's views. An example is included for you.
  */
 
+
 const app = createApp();
+
+const store = createStore({ 
+    state: { 
+        teste: 'Teste de recuperação de valor da Store Vuex' 
+    } 
+}) 
+app.use(store)
 
 
 import ExampleComponent from './components/ExampleComponent.vue';
