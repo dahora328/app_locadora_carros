@@ -3,6 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <!--Inicio do card busca de marcas-->
+        
         <div class="card mb-3">
           <card titulo="Busca de marcas">
             <template v-slot:conteudo>
@@ -114,7 +115,20 @@
     <modal-component id="modalMarcaVisualizar" titulo="Visualizar marca">
       <template v-slot:alertas></template>
       <template v-slot:conteudo>
-        Teste
+        
+        <imput-container titulo="ID">
+          <input type="text" class="form-control" :value="$store.state.item.id" disabled>
+        </imput-container>
+        <imput-container titulo="Nome da Marca">
+          <input type="text" class="form-control" :value="$store.state.item.nome" disabled>
+        </imput-container>
+        <imput-container titulo="Imagem">
+          <img :src="'storage/'+$store.state.item.imagem" v-if="$store.state.item.imagem">
+        </imput-container>
+        <imput-container titulo="Data de criação">
+          <input type="text" class="form-control" :value="$store.state.item.created_at" disabled>
+        </imput-container>
+
       </template>
       <template v-slot:rodape>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
