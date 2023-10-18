@@ -138,8 +138,13 @@
 
     <!--Inicio do modal de remoção de marca -->
     <modal-component id="modalMarcaRemover" titulo="Remover marca">
-      <template v-slot:alertas></template>
-      <template v-slot:conteudo>
+      <template v-slot:alertas>
+        <alert-component tipo="success" :detalhes="$store.state.transacao" titulo="Transação realizada com sucesso"
+          v-if="$store.state.transacao.status=='sucesso'"></alert-component>
+          <alert-component tipo="danger" :detalhes="$store.state.transacao" titulo="Erro na transação"
+          v-if="$store.state.transacao.status=='erro'"></alert-component>
+      </template>
+      <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
         
         <imput-container titulo="ID">
           <input type="text" class="form-control" :value="$store.state.item.id" disabled>
@@ -150,6 +155,7 @@
       </template>
       <template v-slot:rodape>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-danger" @click="remover()" v-if="$store.state.transacao.status != 'sucesso'">Remover</button>
       </template>
     </modal-component>
     <!--Fim do modal de remoção de marca -->
@@ -157,7 +163,9 @@
 </template>
 <script>
 import axios from 'axios'
+import Alert from './Alert.vue'
 export default {
+  components: { Alert },
   computed: {
     //configuração do token
     token() {
@@ -187,6 +195,36 @@ export default {
     }
   },
   methods: {
+    remover(){
+      let confirmacao = confirm('Tem certeza que deseja remover o item ' + this.$store.state.item.nome)
+
+      if(!confirmacao) {
+        return false
+      }
+      
+      let formData = new FormData();
+      formData.append('_method', 'delete')
+
+      let config = {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': this.token
+        }
+      }
+
+      let url = this.urlBase + '/' + this.$store.state.item.id
+
+      axios.post(url, formData, config)
+          .then(response => {
+            this.$store.state.transacao.status = 'sucesso'
+            this.$store.state.transacao.mensagem = response.data.msg
+            this.carregarLista()
+          })
+          .catch(erros =>{
+            this.$store.state.transacao.status = 'erro'
+            this.$store.state.transacao.mensagem = erros.response.data.erro
+          })
+    },
     pesquisar() {
       let filtro = ''
 
@@ -261,6 +299,7 @@ export default {
             mensagem: 'ID do registro: ' + response.data.id
           }
           console.log(response)
+          this.carregarLista()
         })
         .catch(erros => {
           this.transacaoStatus = 'erro'
