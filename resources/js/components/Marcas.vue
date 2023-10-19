@@ -46,7 +46,7 @@
               <template v-slot:conteudo>
                 <table-component :dados="marcas.data" 
                 :visualizar="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaVisualizar'}"
-                :atualizar="true"
+                :atualizar="{visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaAtualizar'}"
                 :remover="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaRemover'}"
                 :titulos="{
                   id: { titulo: 'ID', tipo: 'texto' },
@@ -159,6 +159,35 @@
       </template>
     </modal-component>
     <!--Fim do modal de remoção de marca -->
+
+    <!--Inicio do modal de atualização de marca -->
+    <modal-component id="modalMarcaAtualizar" titulo="Atualizar marca">
+      <template v-slot:alertas>
+
+      </template>
+      <template v-slot:conteudo>
+        <div class="form-group">
+          <imput-container titulo="Nome da Marca" id="atualizarNome" id-help="atualizarNomeHelp"
+            texto-ajuda="Informe o nome da marca.">
+            <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarNomeHelp"
+              placeholder="Nome da marca" v-model="$store.state.item.nome" />
+          </imput-container>
+        </div>
+
+        <div class="form-group">
+          <imput-container id="atualizarImagem" id-help="atualizarImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
+            <input type="file" class="form-control-file" id="atualizarImagem" aria-describedby="atualizarImagemHelp"
+              placeholder="Selecione uma imagem" @change="carregarImagem($event)" />
+          </imput-container>
+        </div>
+        {{ $store.state.item }}
+      </template>
+      <template v-slot:rodape>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
+      </template>
+    </modal-component>
+    <!--Fim do modal de atualização de marca -->
   </div>
 </template>
 <script>
@@ -195,6 +224,31 @@ export default {
     }
   },
   methods: {
+    atualizar(){
+      let formData = new FormData();
+      formData.append('_method', 'patch')
+      formData.append('nome', this.$store.state.item.nome)
+      formData.append('imagem', this.arquivoImagem[0])
+
+      let url = this.urlBase + '/' + this.$store.state.item.id
+
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',
+          'Authorization': this.token
+        }
+      }
+
+      axios.post(url, formData, config)
+          .then(response=>{
+            console.log('Atualizado', response)
+            this.carregarLista()
+          })
+          .catch(erros=>{
+            console.log('Erro de atualização', erros.response)
+          })
+    },
     remover(){
       let confirmacao = confirm('Tem certeza que deseja remover o item ' + this.$store.state.item.nome)
 
