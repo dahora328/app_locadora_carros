@@ -109,11 +109,22 @@ class MarcaController extends Controller
             $request->validate($marca->rules(), $marca->feedback());
         }
 
-        // Remove o arquivo antigo caso um novo arquivo tebha sido enviado no request
-        if($request->file('imagem')){
-            Storage::disk('public')->delete($marca->imagem);
-        }
+        //preenchendo o objeto $marca com todos os dados do request
+        $marca->fill($request->all());
 
+        //se a imagem foi encaminha na requisição
+        if($request->file('imagem')){
+            //remove o arquivo antigo
+            Storage::disk('public')->delete($marca->imagem);
+            $imagem = $request->file('imagem');
+
+            $image_urn = $imagem->store('imagens', 'public');
+            $marca->imagem = $image_urn;
+        }
+        $marca->save();
+        return response()->json($marca, 200);
+
+        /* Método PUT 
         $imagem = $request->file('imagem');
 
         $image_urn = $imagem->store('imagens', 'public');

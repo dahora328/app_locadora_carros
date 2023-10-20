@@ -29,7 +29,7 @@ const app = createApp();
 const store = createStore({ 
     state: { 
         item: {},
-        transacao: { status: '', mensagem: ''}
+        transacao: { status: '', mensagem: '', dados: ''}
     } 
 }) 
 app.use(store)

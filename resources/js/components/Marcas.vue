@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <!--Inicio do card busca de marcas-->
-        
+
         <div class="card mb-3">
           <card titulo="Busca de marcas">
             <template v-slot:conteudo>
@@ -44,16 +44,15 @@
           <div class="card mb-3">
             <card titulo="Relação de Marcas">
               <template v-slot:conteudo>
-                <table-component :dados="marcas.data" 
-                :visualizar="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaVisualizar'}"
-                :atualizar="{visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaAtualizar'}"
-                :remover="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaRemover'}"
-                :titulos="{
-                  id: { titulo: 'ID', tipo: 'texto' },
-                  nome: { titulo: 'Nome', tipo: 'texto' },
-                  imagem: { titulo: 'Imagem', tipo: 'imagem' },
-                  created_at: { titulo: 'Data Criação', tipo: 'data' },
-                }"></table-component>
+                <table-component :dados="marcas.data"
+                  :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaVisualizar' }"
+                  :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaAtualizar' }"
+                  :remover="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaRemover' }" :titulos="{
+                    id: { titulo: 'ID', tipo: 'texto' },
+                    nome: { titulo: 'Nome', tipo: 'texto' },
+                    imagem: { titulo: 'Imagem', tipo: 'imagem' },
+                    created_at: { titulo: 'Data Criação', tipo: 'data' },
+                  }"></table-component>
               </template>
               <template v-slot:rodape>
                 <div class="col-10">
@@ -93,7 +92,6 @@
             <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp"
               placeholder="Nome da marca" v-model="nomeMarca" />
           </imput-container>
-          {{ nomeMarca }}
         </div>
 
         <div class="form-group">
@@ -101,7 +99,6 @@
             <input type="file" class="form-control-file" id="novaImagem" aria-describedby="novaImagemHelp"
               placeholder="Selecione uma imagem" @change="carregarImagem($event)" />
           </imput-container>
-          {{ arquivoImagem }}
         </div>
       </template>
       <template v-slot:rodape>
@@ -115,7 +112,7 @@
     <modal-component id="modalMarcaVisualizar" titulo="Visualizar marca">
       <template v-slot:alertas></template>
       <template v-slot:conteudo>
-        
+
         <imput-container titulo="ID">
           <input type="text" class="form-control" :value="$store.state.item.id" disabled>
         </imput-container>
@@ -123,7 +120,7 @@
           <input type="text" class="form-control" :value="$store.state.item.nome" disabled>
         </imput-container>
         <imput-container titulo="Imagem">
-          <img :src="'storage/'+$store.state.item.imagem" v-if="$store.state.item.imagem">
+          <img :src="'storage/' + $store.state.item.imagem" v-if="$store.state.item.imagem">
         </imput-container>
         <imput-container titulo="Data de criação">
           <input type="text" class="form-control" :value="$store.state.item.created_at" disabled>
@@ -140,12 +137,12 @@
     <modal-component id="modalMarcaRemover" titulo="Remover marca">
       <template v-slot:alertas>
         <alert-component tipo="success" :detalhes="$store.state.transacao" titulo="Transação realizada com sucesso"
-          v-if="$store.state.transacao.status=='sucesso'"></alert-component>
-          <alert-component tipo="danger" :detalhes="$store.state.transacao" titulo="Erro na transação"
-          v-if="$store.state.transacao.status=='erro'"></alert-component>
+          v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+        <alert-component tipo="danger" :detalhes="$store.state.transacao" titulo="Erro na transação"
+          v-if="$store.state.transacao.status == 'erro'"></alert-component>
       </template>
       <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
-        
+
         <imput-container titulo="ID">
           <input type="text" class="form-control" :value="$store.state.item.id" disabled>
         </imput-container>
@@ -155,7 +152,8 @@
       </template>
       <template v-slot:rodape>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-danger" @click="remover()" v-if="$store.state.transacao.status != 'sucesso'">Remover</button>
+        <button type="button" class="btn btn-danger" @click="remover()"
+          v-if="$store.state.transacao.status != 'sucesso'">Remover</button>
       </template>
     </modal-component>
     <!--Fim do modal de remoção de marca -->
@@ -163,7 +161,10 @@
     <!--Inicio do modal de atualização de marca -->
     <modal-component id="modalMarcaAtualizar" titulo="Atualizar marca">
       <template v-slot:alertas>
-
+        <alert-component tipo="success" :detalhes="$store.state.transacao" titulo="Transação realizada com sucesso"
+          v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
+        <alert-component tipo="danger" :detalhes="$store.state.transacao" titulo="Erro na transação"
+          v-if="$store.state.transacao.status == 'erro'"></alert-component>
       </template>
       <template v-slot:conteudo>
         <div class="form-group">
@@ -175,12 +176,12 @@
         </div>
 
         <div class="form-group">
-          <imput-container id="atualizarImagem" id-help="atualizarImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
+          <imput-container id="atualizarImagem" id-help="atualizarImagemHelp"
+            texto-ajuda="Selecione uma imagem no formato PNG">
             <input type="file" class="form-control-file" id="atualizarImagem" aria-describedby="atualizarImagemHelp"
               placeholder="Selecione uma imagem" @change="carregarImagem($event)" />
           </imput-container>
         </div>
-        {{ $store.state.item }}
       </template>
       <template v-slot:rodape>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -224,11 +225,13 @@ export default {
     }
   },
   methods: {
-    atualizar(){
+    atualizar() {
       let formData = new FormData();
       formData.append('_method', 'patch')
       formData.append('nome', this.$store.state.item.nome)
-      formData.append('imagem', this.arquivoImagem[0])
+      if (this.arquivoImagem[0]) {
+        formData.append('imagem', this.arquivoImagem[0])
+      }
 
       let url = this.urlBase + '/' + this.$store.state.item.id
 
@@ -241,21 +244,28 @@ export default {
       }
 
       axios.post(url, formData, config)
-          .then(response=>{
-            console.log('Atualizado', response)
-            this.carregarLista()
-          })
-          .catch(erros=>{
-            console.log('Erro de atualização', erros.response)
-          })
+        .then(response => {
+          
+          //limpar os campo de seleção de arquivos
+          atualizarImagem.value = ''
+          this.$store.state.transacao.status = 'sucesso'
+          this.$store.state.transacao.mensagem = 'Regsitro de ID: ' + this.$store.state.item.id + ' de marca atualizado com sucesso'
+          this.carregarLista()
+        })
+        .catch(errors => {
+          console.log('Erro de atualização', errors.response)
+          this.$store.state.transacao.status = 'erro'
+          this.$store.state.transacao.mensagem = errors.response.data.message
+          this.$store.state.transacao.dados = errors.response.data.errors
+        })
     },
-    remover(){
+    remover() {
       let confirmacao = confirm('Tem certeza que deseja remover o item ' + this.$store.state.item.nome)
 
-      if(!confirmacao) {
+      if (!confirmacao) {
         return false
       }
-      
+
       let formData = new FormData();
       formData.append('_method', 'delete')
 
@@ -269,15 +279,15 @@ export default {
       let url = this.urlBase + '/' + this.$store.state.item.id
 
       axios.post(url, formData, config)
-          .then(response => {
-            this.$store.state.transacao.status = 'sucesso'
-            this.$store.state.transacao.mensagem = response.data.msg
-            this.carregarLista()
-          })
-          .catch(erros =>{
-            this.$store.state.transacao.status = 'erro'
-            this.$store.state.transacao.mensagem = erros.response.data.erro
-          })
+        .then(response => {
+          this.$store.state.transacao.status = 'sucesso'
+          this.$store.state.transacao.mensagem = response.data.msg
+          this.carregarLista()
+        })
+        .catch(errors => {
+          this.$store.state.transacao.status = 'erro'
+          this.$store.state.transacao.mensagem = errors.response.data.erro
+        })
     },
     pesquisar() {
       let filtro = ''
