@@ -34,6 +34,31 @@ const store = createStore({
 }) 
 app.use(store)
 
+app.config.globalProperties.$filters = {
+    formataDataTempo(date){
+        if(!date){
+          return ''
+        }
+        //T separa data do tempo 
+        date = date.split('T');
+
+        //formatando a data
+        let dataFormatada = date[0]
+        dataFormatada = dataFormatada.split('-')
+        dataFormatada = dataFormatada[2] + '/' + dataFormatada[1] + '/' + dataFormatada[0]
+
+        //formatando a hora
+        let horaFormatada = date[1]
+        horaFormatada = horaFormatada.split('.')
+        horaFormatada = horaFormatada[0]
+
+        //formatação final data e hora
+        let dataFinal = dataFormatada + ' ' +horaFormatada
+
+        return dataFinal
+      }
+}
+
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
