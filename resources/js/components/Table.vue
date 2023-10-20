@@ -12,7 +12,7 @@
         <tr v-for="obj, chave in dadosFiltrados" :key="chave">
           <td v-for="valor, chaveValor in obj" :key="chaveValor">
             <span v-if="titulos[chaveValor].tipo == 'texto'">{{ valor }}</span>
-            <span v-if="titulos[chaveValor].tipo == 'data'">{{ '...' + valor }}</span>
+            <span v-if="titulos[chaveValor].tipo == 'data'">{{ formataDataTempo(valor) }}</span>
             <span v-if="titulos[chaveValor].tipo == 'imagem'">
               <img :src="'/storage/' + valor" width="30" height="30">
             </span>
@@ -41,7 +41,30 @@ export default {
       this.$store.state.transacao.mensagem = ''
       this.$store.state.transacao.dados = ''
       this.$store.state.item = obj
-    }
+    }, 
+    formataDataTempo(date){
+        if(!date){
+          return ''
+        }
+        //T separa data do tempo 
+        date = date.split('T');
+
+        //formatando a data
+        let dataFormatada = date[0]
+        dataFormatada = dataFormatada.split('-')
+        dataFormatada = dataFormatada[2] + '/' + dataFormatada[1] + '/' + dataFormatada[0]
+
+        //formatando a hora
+        let horaFormatada = date[1]
+        horaFormatada = horaFormatada.split('.')
+        horaFormatada = horaFormatada[0]
+
+        //formatação final data e hora
+        let dataFinal = dataFormatada + ' ' +horaFormatada
+
+        console.log(horaFormatada)
+        return dataFinal
+      } 
   },
   computed: {
     dadosFiltrados() {
