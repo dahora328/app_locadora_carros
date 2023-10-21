@@ -31,3 +31,43 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+
+/* Interpectar os requests da aplicação*/
+axios.interceptors.request.use(
+    config => {
+        //definir para todas as requisições os parâmetros de accept e authorization
+        config.headers['Accept'] = 'application/json'
+
+        //recuperando o token de autorização dos cookies
+        let token = document.cookie.split(';').find(indice => {
+            return indice.includes('token=')
+        })
+
+        token = token.split('=')[1] //pega indice da posição 1
+
+        token = 'Bearer ' + token
+
+        config.headers.Authorization = token
+
+        console.log('Interceptando o request antes do envio', config)
+        return config
+    },
+    error => {
+        console.log('Erro na requisição: ', error)
+        return Promise.reject(error)
+    }
+)
+
+
+/* Interpectar os responses da aplicação*/
+axios.interceptors.response.use(
+    response => {
+        console.log('Interceptando a resposta antes da aplicação', response)
+        return response
+    },
+    error => {
+        console.log('Erro na resposta: ', error)
+        return Promise.reject(error)
+    }
+)
