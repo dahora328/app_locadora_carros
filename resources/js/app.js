@@ -16,6 +16,7 @@ import Card from './components/Card.vue';
 import Modal from './components/Modal.vue';
 import Alert from './components/Alert.vue';
 import Paginate from './components/Paginate.vue';
+import Cliente from './components/Cliente.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -71,6 +72,7 @@ app.component('card', Card);
 app.component('modal-component', Modal);
 app.component('alert-component', Alert);
 app.component('paginate-component', Paginate);
+app.component('cliente-component', Cliente);
 
 /**
  * The following block of code may be used to automatically register your

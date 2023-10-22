@@ -228,7 +228,7 @@ export default {
 
       axios.post(url, formData, config)
         .then(response => {
-          
+
           //limpar os campo de seleção de arquivos
           atualizarImagem.value = ''
           this.$store.state.transacao.status = 'sucesso'

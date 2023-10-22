@@ -26,3 +26,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/marcas', function (){
     return view('app.marcas');
 })->name('marcas')->middleware('auth');
+
+Route::get('/cliente', function(){
+    return view('app.cliente');
+})->name('cliente')->middleware('auth');
