@@ -34,7 +34,7 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Clientes</a>
+                            <a class="nav-link" href="{{ route('clientes')}}">Clientes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Locações</a>
@@ -96,7 +96,7 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ Route::currentRouteName() }}</li>
                 </ol>
             </nav>
-            
+
         @endauth
         <main class="py-4">
             @yield('content')

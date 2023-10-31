@@ -16,6 +16,7 @@ import Card from './components/Card.vue';
 import Modal from './components/Modal.vue';
 import Alert from './components/Alert.vue';
 import Paginate from './components/Paginate.vue';
+import Clientes from './components/Clientes.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -26,12 +27,12 @@ import Paginate from './components/Paginate.vue';
 
 const app = createApp();
 
-const store = createStore({ 
-    state: { 
+const store = createStore({
+    state: {
         item: {},
         transacao: { status: '', mensagem: ''}
-    } 
-}) 
+    }
+})
 app.use(store)
 
 
@@ -46,6 +47,7 @@ app.component('card', Card);
 app.component('modal-component', Modal);
 app.component('alert-component', Alert);
 app.component('paginate-component', Paginate);
+app.component('clientes-component', Clientes);
 
 /**
  * The following block of code may be used to automatically register your

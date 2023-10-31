@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarcaController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +28,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/marcas', function (){
     return view('app.marcas');
 })->name('marcas')->middleware('auth');
+Route::get('/clientes', function (){
+    return view('app.clientes');
+})->name('clientes')->middleware('auth');

@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <!--Inicio do card busca de marcas-->
-        
+
         <div class="card mb-3">
           <card titulo="Busca de marcas">
             <template v-slot:conteudo>
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <!--Fim do card listagem de marcas-->
+      <!--Fim do card busca de marcas-->
 
       <!--Inicio do card listagem de marcas-->
       <div class="row justify-content-center">
@@ -44,7 +44,7 @@
           <div class="card mb-3">
             <card titulo="Relação de Marcas">
               <template v-slot:conteudo>
-                <table-component :dados="marcas.data" 
+                <table-component :dados="marcas.data"
                 :visualizar="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaVisualizar'}"
                 :atualizar="true"
                 :remover="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaRemover'}"
@@ -115,7 +115,7 @@
     <modal-component id="modalMarcaVisualizar" titulo="Visualizar marca">
       <template v-slot:alertas></template>
       <template v-slot:conteudo>
-        
+
         <imput-container titulo="ID">
           <input type="text" class="form-control" :value="$store.state.item.id" disabled>
         </imput-container>
@@ -145,7 +145,7 @@
           v-if="$store.state.transacao.status=='erro'"></alert-component>
       </template>
       <template v-slot:conteudo v-if="$store.state.transacao.status != 'sucesso'">
-        
+
         <imput-container titulo="ID">
           <input type="text" class="form-control" :value="$store.state.item.id" disabled>
         </imput-container>
@@ -201,7 +201,7 @@ export default {
       if(!confirmacao) {
         return false
       }
-      
+
       let formData = new FormData();
       formData.append('_method', 'delete')
 
