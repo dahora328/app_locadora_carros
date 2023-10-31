@@ -16,7 +16,11 @@ import Card from './components/Card.vue';
 import Modal from './components/Modal.vue';
 import Alert from './components/Alert.vue';
 import Paginate from './components/Paginate.vue';
+<<<<<<< HEAD
 import Clientes from './components/Clientes.vue';
+=======
+import Cliente from './components/Cliente.vue';
+>>>>>>> 740c707bee5e1a0cefebad587d603e40aa6df5c4
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -30,10 +34,41 @@ const app = createApp();
 const store = createStore({
     state: {
         item: {},
+<<<<<<< HEAD
         transacao: { status: '', mensagem: ''}
     }
 })
+=======
+        transacao: { status: '', mensagem: '', dados: ''}
+    } 
+}) 
+>>>>>>> 740c707bee5e1a0cefebad587d603e40aa6df5c4
 app.use(store)
+
+app.config.globalProperties.$filters = {
+    formataDataTempo(date){
+        if(!date){
+          return ''
+        }
+        //T separa data do tempo 
+        date = date.split('T');
+
+        //formatando a data
+        let dataFormatada = date[0]
+        dataFormatada = dataFormatada.split('-')
+        dataFormatada = dataFormatada[2] + '/' + dataFormatada[1] + '/' + dataFormatada[0]
+
+        //formatando a hora
+        let horaFormatada = date[1]
+        horaFormatada = horaFormatada.split('.')
+        horaFormatada = horaFormatada[0]
+
+        //formatação final data e hora
+        let dataFinal = dataFormatada + ' ' +horaFormatada
+
+        return dataFinal
+      }
+}
 
 
 import ExampleComponent from './components/ExampleComponent.vue';
@@ -47,7 +82,11 @@ app.component('card', Card);
 app.component('modal-component', Modal);
 app.component('alert-component', Alert);
 app.component('paginate-component', Paginate);
+<<<<<<< HEAD
 app.component('clientes-component', Clientes);
+=======
+app.component('cliente-component', Cliente);
+>>>>>>> 740c707bee5e1a0cefebad587d603e40aa6df5c4
 
 /**
  * The following block of code may be used to automatically register your
