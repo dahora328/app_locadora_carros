@@ -45,7 +45,6 @@
             <card titulo="Relação de Marcas">
               <template v-slot:conteudo>
                 <table-component :dados="marcas.data"
-<<<<<<< HEAD
                 :visualizar="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaVisualizar'}"
                 :atualizar="true"
                 :remover="{visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaRemover'}"
@@ -55,16 +54,6 @@
                   imagem: { titulo: 'Imagem', tipo: 'imagem' },
                   created_at: { titulo: 'Data Criação', tipo: 'data' },
                 }"></table-component>
-=======
-                  :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaVisualizar' }"
-                  :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaAtualizar' }"
-                  :remover="{ visivel: true, dataToggle: 'modal', dataTarget: '#modalMarcaRemover' }" :titulos="{
-                    id: { titulo: 'ID', tipo: 'texto' },
-                    nome: { titulo: 'Nome', tipo: 'texto' },
-                    imagem: { titulo: 'Imagem', tipo: 'imagem' },
-                    created_at: { titulo: 'Data Criação', tipo: 'data' },
-                  }"></table-component>
->>>>>>> 740c707bee5e1a0cefebad587d603e40aa6df5c4
               </template>
               <template v-slot:rodape>
                 <div class="col-10">
@@ -222,17 +211,7 @@ export default {
     }
   },
   methods: {
-<<<<<<< HEAD
-    remover(){
-      let confirmacao = confirm('Tem certeza que deseja remover o item ' + this.$store.state.item.nome)
-
-      if(!confirmacao) {
-        return false
-      }
-
-=======
     atualizar() {
->>>>>>> 740c707bee5e1a0cefebad587d603e40aa6df5c4
       let formData = new FormData();
       formData.append('_method', 'patch')
       formData.append('nome', this.$store.state.item.nome)

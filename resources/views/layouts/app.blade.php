@@ -34,11 +34,7 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                         <li class="nav-item">
-<<<<<<< HEAD
                             <a class="nav-link" href="{{ route('clientes')}}">Clientes</a>
-=======
-                            <a class="nav-link" href="{{ route('cliente') }}">Clientes</a>
->>>>>>> 740c707bee5e1a0cefebad587d603e40aa6df5c4
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Locações</a>
